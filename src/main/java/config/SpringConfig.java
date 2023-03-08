@@ -33,10 +33,10 @@ public class SpringConfig {
     public DataSource getDataSource() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("db.driver")));
-        dataSource.setUrl(env.getProperty("db.url"));
-        dataSource.setUsername(env.getProperty("db.username"));
-        dataSource.setPassword(env.getProperty("db.password"));
+        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("com.mysql.cj.jdbc.Driver")));
+        dataSource.setUrl(env.getProperty("jdbc:mysql://localhost:3306/k-pac"));
+        dataSource.setUsername(env.getProperty("root"));
+        dataSource.setPassword(env.getProperty("28Vika200413"));
         return dataSource;
     }
 
