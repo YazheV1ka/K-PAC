@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Knowledge Packages</title>
+    <title>Sets</title>
 </head>
 <body>
-<h1 class="kpac_table">All Knowledge Packages</h1>
-<table class="kpac_table">
+<h1 class="set_table">All Sets</h1>
+<table class="set_table">
     <tr>
         <th>Id</th>
         <th>Title</th>
@@ -13,24 +13,18 @@
         <th>Creation Date</th>
         <th>Delete</th>
     </tr>
-    <c:forEach var="kPac" items="${kPac}">
+    <c:forEach var="set" items="${set}">
         <tr>
             <td>
-                <c:out value="${kPac.id}"/>
+                <c:out value="${set.id}"/>
             </td>
             <td>
-                <c:out value="${kPac.title}"/>
+                <c:out value="${set.title}"/>
             </td>
             <td>
-                <c:out value="${kPac.description}"/>
-            </td>
-            <td>
-                <c:out value="${kPac.creation_date}"/>
-            </td>
-            <td>
-                <a href="${pageContext.request.contextPath}/removeKPac/${kPac.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/removeSet/${set.id}">Delete</a>
         </tr>
-        <a href="${pageContext.request.contextPath}/createkPac.jsp">Add</a>
+        <a href="${pageContext.request.contextPath}/createSet.jsp">Add</a>
     </c:forEach>
 </table>
 

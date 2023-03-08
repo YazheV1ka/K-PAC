@@ -1,51 +1,69 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>kPac Form</title>
-    <link rel="stylesheet" type="text/css" href="grid.css">
-    <script src="grid.js"></script>
+    <title>Knowledge Packages</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- DHTMLX 7 CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.dhtmlx.com/suite/edge/suite.css"/>
+    <!-- DHTMLX 7 JS -->
+    <script src="https://cdn.dhtmlx.com/suite/edge/suite.js"></script>
 </head>
 <body>
-<h1>kPac Form</h1>
-<form id="kPacForm">
-    <div>
-        <label for="id">ID:</label>
-        <input type="text" name="id" id="id">
-    </div>
-    <div>
-        <label for="title">Title:</label>
-        <input type="text" name="title" id="title">
-    </div>
-    <div>
-        <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
-    </div>
-    <div>
-        <label for="creationDate">Creation Date:</label>
-        <input type="text" name="creationDate" id="creationDate">
-    </div>
-    <div>
-        <input type="submit" value="Submit">
-    </div>
-</form>
+<div class="dhx_container">
+    <h1 class="dhx_title">All Knowledge Packages</h1>
+    <div id="kpac_table" class="dhx_dataview_container"></div>
+</div>
+
 <script>
-    var kPacForm = new dhx.Form("kPacForm", {
-        width: "500px",
-        rows: [
-            {type: "input", label: "ID", name: "id"},
-            {type: "input", label: "Title", name: "title"},
-            {type: "textarea", label: "Description", name: "description"},
-            {type: "input", label: "Creation Date", name: "creationDate"}
-        ]
+    // Data
+    const kPacs = ${kPac};
+
+    // Layout
+    const kPacTable = new dhx.DataView("kpac_table", {
+        css: "dhx_widget--bordered dhx_widget--bg_white",
+        select: false,
+        editable: false,
+        multiselect: false,
+        dragMode: "both",
+        template: function (kPac) {
+            return "<div class='dhx_dataview__item'>" +
+                "<div class='dhx_dataview__content'>" +
+                "<div class='id'>" + kPac.id + "</div>" +
+                "<div class='dhx_dataview__title'>" + kPac.title + "</div>" +
+                "<div class='dhx_dataview__description'>" + kPac.description + "</div>" +
+                "<div class='dhx_dataview__date'>" + kPac.creationDate + "</div>" +
+                "</div>" +
+                "<div class='dhx_dataview__button'><a href='${pageContext.request.contextPath}/removeKPac/" + kPac.id + "'>Delete</a></div>" +
+                "</div>";
+        },
+        data: kPacs,
+        dragMode: false,
+        height: 500,
+        css: "dhx_widget--bg_white dhx_widget--bordered",
+        padding: 10,
+        navigation: true,
+        keyNavigation: true,
+        autoWidth: true,
+        onClick: function (id) {
+            console.log(kPacTable.getItem(id));
+        },
     });
 
-    kPacForm.attachEvent("onSubmit", function(data){
-        dhx.ajax().post("kPacServlet", data, function(response){
-            console.log(response);
-        });
-        return false;
+    // Filter
+    const kPacFilter = kPacTable.addFilter({
+        type: "search",
+        position: "header",
+        text: "Filter",
+        icon: "dxi-magnify",
+        showButton: true,
     });
+
+    // Sort
+    kPacTable.addSorting("title");
+    kPacTable.addSorting("description");
+    kPacTable.addSorting("creationDate");
 </script>
 </body>
 </html>
